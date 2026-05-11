@@ -37,7 +37,7 @@ else ifeq ($(BUILD_TYPE),hipblas)
 ifeq ($(strip $(AMDGPU_TARGETS)),)
 $(error AMDGPU_TARGETS is empty — set it to a comma-separated list of gfx targets e.g. gfx1100,gfx1101)
 endif
-	CMAKE_ARGS+=-DGGML_HIP=ON -DAMDGPU_TARGETS=$(AMDGPU_TARGETS)
+	CMAKE_ARGS+=-DGGML_HIP=ON -DCMAKE_HIP_FLAGS="--rocm-path=/opt/rocm -mllvm --amdgpu-unroll-threshold-local=600" -DAMDGPU_TARGETS=gfx1151 -DCMAKE_BUILD_TYPE=Release -DGGML_RPC=ON -DLLAMA_HIP_UMA=ON -DGGML_CUDA_ENABLE_UNIFIED_MEMORY=ON -DROCM_PATH=/opt/rocm -DHIP_PATH=/opt/rocm -DHIP_PLATFORM=amd
 else ifeq ($(BUILD_TYPE),vulkan)
 	CMAKE_ARGS+=-DGGML_VULKAN=1
 else ifeq ($(OS),Darwin)
